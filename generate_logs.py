@@ -3,7 +3,6 @@ import random
 from pathlib import Path
 
 # Define lists of values for generating logs
-event_numbers = [str(i).zfill(3) for i in range(1, 1000)]
 ip_addresses = [
     "192.168.1.100",
     "10.0.0.5",
@@ -69,20 +68,22 @@ paths = [
 log_dir = Path("logs")
 log_dir.mkdir(exist_ok=True, parents=True)
 
-for i in range(20):
+event_num = 0
+for i in range(10):
     fpath = log_dir / f"log_{str(i).zfill(2)}.txt"
 
     with open(fpath, "w") as f:
-        for j in range(2900000):  # total 58000000 in 20 files for ~5GB of logs
+        for j in range(2900000):  # total ~3G in 10 files
             hour = random.randint(0, 23)
             minute = random.randint(0, 59)
             second = random.randint(0, 59)
             timestamp = datetime.datetime(2023, 11, 15, hour, minute, second)
             timestamp = timestamp.strftime("%b %d %Y %H:%M:%S UTC")
-            event_num = random.choice(event_numbers)
             ip_address = random.choice(ip_addresses)
             event_name = random.choice(event_names) + str(event_num)
             interval = random.choice(intervals)
             path = random.choice(paths)
             log = f"{timestamp} [{ip_address}] eventnum={event_num} {event_name} {interval} {path}"
             f.write(log + "\n")
+
+            event_num += 1

@@ -5,18 +5,12 @@ import re
 log_folder = 'logs'
 os.chdir(log_folder)
 
-# That's not an example of a good code, this draft is prepared for refactoring.
-
-class EventException(Exception):
-    pass
+# This draft is intended for refactoring; please do not use it as a reference for your solution.
 
 
 def handle_eventnum(etc_events, raw_event):
     pattern = r'eventnum=\d+'
     matches = re.findall(pattern, raw_event)
-    if len(matches) > 2:
-        raise EventException(raw_event)
-
     etc_events[matches[0]] = raw_event
 
 
